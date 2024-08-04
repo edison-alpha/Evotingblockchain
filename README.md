@@ -33,7 +33,12 @@ const soulboundTokenAddress = "0xb2A829b6f467F0DdA930175d43E0b7aE09DC6108";// UB
 
 ```
  ```ubah dulu
-
+cd client
 npm i
 npm start
+```
+
+ ```ubah dulu
+LOGIN ADMIN DENGAN ADDRESS DARI PRIVATE KEY YANG DI IMPORT
+LOGIN USER DARI ADDRESS METAMASK YANG DIBUAT
 ```
