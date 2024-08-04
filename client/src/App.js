@@ -4,6 +4,7 @@ import Home from './Home'
 import { AuthContext } from './context/AuthContext'
 import Login from './Login'
 
+
 // Komponen utama aplikasi
 const App = () => {
     // Mengambil data currentUser dari AuthContext
@@ -25,7 +26,7 @@ const App = () => {
                     <Login />
                 } />
                 {/* Rute untuk halaman login */}
-                <Route path='/Home' element={<Home/>} />
+                <Route path='/dashboard/:id' element={<Home/>} />
             </Routes>
         </div>
     )

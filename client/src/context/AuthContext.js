@@ -15,6 +15,7 @@ export const AuthContextProvider = ({ children }) => {
     const [provider, setProvider] = useState(null);
     const [connected, setConnected] = useState(false);
     const [currentUser, setCurrentUser] = useState();
+    const [isAdmin, setIsAdmin] = useState(false);
 
     // Fungsi untuk menghubungkan wallet ke aplikasi
     const connectWallet = useCallback(async () => {
@@ -42,6 +43,9 @@ export const AuthContextProvider = ({ children }) => {
             setConnected(true);
             window.localStorage.setItem("Connected", "injected");
 
+            // Periksa apakah pengguna adalah admin
+            setIsAdmin(address.toLowerCase() === admin.toLowerCase());
+
             // Mengatur event listener
             const handleChainChanged = () => window.location.reload();
             const handleAccountsChanged = async () => {
@@ -49,6 +53,7 @@ export const AuthContextProvider = ({ children }) => {
                 setAccount(newAccount);
                 const admin = await contract.getOwner();
                 setAdminAccount(admin);
+                setIsAdmin(newAccount.toLowerCase() === admin.toLowerCase());
             };
 
             window.ethereum.on("chainChanged", handleChainChanged);
@@ -70,6 +75,7 @@ export const AuthContextProvider = ({ children }) => {
         setSoulboundContract(null);
         setProvider(null);
         setConnected(false);
+        setIsAdmin(false);
         window.localStorage.removeItem("Connected");
     }, []);
 
@@ -107,6 +113,7 @@ export const AuthContextProvider = ({ children }) => {
                 isEligibleVoter,
                 connectWallet,
                 disconnectWallet,
+                isAdmin, // Tambahkan status admin di sini
             }}
         >
             {children}

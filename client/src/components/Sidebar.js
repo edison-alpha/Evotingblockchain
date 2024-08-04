@@ -1,7 +1,7 @@
-import { Fragment, useContext, useState } from 'react'
+import { Fragment, useContext, useState,useEffect } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import img from "../img/vote.png"
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import {
     CalendarIcon,
     FolderIcon,
@@ -23,8 +23,8 @@ const adminNav = [
     { id: 3, name: 'Result', to: '/dashboard/result', icon: ChartBarIcon },
 ]
 const voterNav = [
-    { id: 0, name: 'Information', to: '/dashboard/', icon: InformationCircleIcon },
-    { id: 1, name: 'Search', to: '/dashboard/voter-registration', icon: CheckCircleIcon },
+    { id: 0, name: 'Information', to: '/dashboard/information', icon: InformationCircleIcon },
+    { id: 1, name: 'Search', to: '/dashboard/search', icon: CheckCircleIcon },
     { id: 2, name: 'Vote-Area', to: '/dashboard/vote-area', icon: RectangleStackIcon },
     { id: 3, name: 'Result', to: '/dashboard/result', icon: ChartBarIcon },
     { id: 4, name: 'Mint SBT', to: '/dashboard/mint-sbt', icon: FolderIcon}
@@ -34,8 +34,38 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 const Sidebar = ({ onClick }) => {
-    const [current, setCurrent] = useState(0)
-    const {adminAccount, account } = useContext(AuthContext);
+    const { id } = useParams();
+  const [current, setCurrent] = useState(0);
+  const { adminAccount, account } = useContext(AuthContext);
+
+  useEffect(() => {
+    switch (id) {
+      case "information":
+        setCurrent(0);
+        break;
+      case "candidate-details":
+        setCurrent(0);
+        break;
+      case "search":
+        setCurrent(1);
+        break;
+      case "vote-area":
+        setCurrent(2);
+        break;
+      case "result":
+        setCurrent(3);
+        break;
+      case "add-candidate":
+        setCurrent(4);
+        break;
+      case "voters":
+        setCurrent(5);
+        break;
+      case "mint-sbt":
+        setCurrent(6);
+        break;
+    }
+  }, []);
 
     const handleClick = (id, name) => {
         setCurrent(id);
@@ -49,10 +79,12 @@ const Sidebar = ({ onClick }) => {
                 {/* Sidebar component, swap this element with another sidebar if you like */}
                 <div className="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5">
                     <div className="flex flex-shrink-0 items-center px-4">
+                        <a href='/'>
                         <h1
                         className="h-16 w-auto"
                         alt="Your Company"
                         >VOTE YUK!</h1>
+                        </a>
                     </div>
                     <div className="mt-5 flex flex-grow flex-col">
                         {
@@ -61,6 +93,7 @@ const Sidebar = ({ onClick }) => {
                                     {voterNav.map((item) => (
                                         <Link
                                             key={item.name}
+                                            to={`${item.to}`}
                                             className={current == item.id ? `bg-blue text-white group flex items-center px-4 py-3 text-sm font-medium rounded-[4px]` : `text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-4 py-3 text-sm font-medium rounded-[4px]`}
                                             onClick={() => handleClick(item.id, item.name)}
                                         >
@@ -79,6 +112,7 @@ const Sidebar = ({ onClick }) => {
                                     {adminNav.map((item) => (
                                         <Link
                                             key={item.name}
+                                            to={`${item.to}`}
                                             className={current == item.id ? `bg-blue text-white group flex items-center px-4 py-3 text-sm font-medium rounded-[4px]` : `text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-4 py-3 text-sm font-medium rounded-[4px]`}
                                             onClick={() => handleClick(item.id, item.name)}
                                         >

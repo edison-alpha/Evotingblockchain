@@ -17,7 +17,7 @@ import { ethers } from 'ethers';
 const soulboundTokenAddress = "0xb2A829b6f467F0DdA930175d43E0b7aE09DC6108";
 
 function Login () {
-        const { connected, disconnectWallet } = useContext(AuthContext);
+    const { connected, connectWallet, disconnectWallet } = useContext(AuthContext);
     const [svgDropdownOpen, setSvgDropdownOpen] = useState(false);
 
     const toggleSvgDropdown = () => setSvgDropdownOpen(!svgDropdownOpen);
@@ -53,21 +53,21 @@ function Login () {
             fetchAccount();
         }, []);
 
-        const connectWallet = async () => {
-            if (window.ethereum) {
-            try {
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                setAccount(accounts[0]);
-                setStatus("");
-                await checkMintedStatus(accounts[0]); // Periksa status minting setelah koneksi
-            } catch (error) {
-                console.error("Error connecting to wallet", error);
-                setStatus("Error connecting to wallet");
-            }
-            } else {
-            setStatus("Metamask not detected");
-            }
-        };
+        // const connectWallet = async () => {
+        //     if (window.ethereum) {
+        //     try {
+        //         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        //         setAccount(accounts[0]);
+        //         setStatus("");
+        //         await checkMintedStatus(accounts[0]); // Periksa status minting setelah koneksi
+        //     } catch (error) {
+        //         console.error("Error connecting to wallet", error);
+        //         setStatus("Error connecting to wallet");
+        //     }
+        //     } else {
+        //     setStatus("Metamask not detected");
+        //     }
+        // };
 
         const checkMintedStatus = async (userAddress) => {
             if (!userAddress) return;
@@ -127,33 +127,31 @@ function Login () {
                     py-1
                     "
                 >
-                    Scelerisque egestas et euismod.
-                    <a href="/" className="pl-3 underline">
-                        Take me there
+                    Sepoliascan
+                    <a href="https://sepolia.etherscan.io/" className="pl-3 underline">
+                        here
                     </a>
                 </div>
                 <div className="mt-6 mb-16 flex items-center justify-between py-2 px-4 sm:mx-0 sm:mb-20 sm:px-0 md:px-6">
                     <div className="mt-4 inline-block pb-4 pl-8">
-                        <a href="/" className="align-middle text-3xl font-bold text-black">
-                            YOTEYUK!
+                        <a href="/dashboard/vote-area" className="align-middle text-3xl font-bold text-black">
+                            VOTEYUK!
                         </a>
                         <div className="hidden pl-14 align-middle xl:inline-block">
                             <a href="/" className="pr-12 text-xl text-black">
                                 Home
                             </a>
-                            <a href="/" className="pr-12 text-xl text-black">
+                            <a href="/dashboard/vote-area" className="pr-12 text-xl text-black">
                                 Vote-Area
                             </a>
-                            <a href="/" className="pr-12 text-xl text-black">
+                            <a href="/dashboard/result" className="pr-12 text-xl text-black">
                                 Result
                             </a>
-                            <a href="/" className="pr-12 text-xl text-black">
+                            <a href="/dashboard/search" className="pr-12 text-xl text-black">
                                 Lacak
-
                             </a>
-                            <a href="/" className="pr-12 text-xl text-black">
+                            <a href="/dashboard/mint-sbt" className="pr-12 text-xl text-black">
                                 MintSBT
-
                             </a>
                         </div>
                     </div>
@@ -163,15 +161,15 @@ function Login () {
                                 {connected ? (
                                     <button
                                         type="button"
-                                        className="bg-blue-500 mt-2 inline-flex items-center px-8 py-3 text-lg font-semibold tracking-tighter text-white"
+                                        className="bg-blue hover:bg-blue-600 mt-2 inline-flex items-center px-8 py-3 text-lg font-semibold tracking-tighter text-white"
                                         onClick={disconnectWallet}
                                     >
-                                        Wallet Connected
+                                        Disconnect Wallet
                                     </button>
                                 ) : (
                                     <button
                                         type="button"
-                                        className="bg-blue-500 mt-2 inline-flex items-center px-8 py-3 text-lg font-semibold tracking-tighter text-white"
+                                        className="bg-blue hover:bg-blue-600 mt-2 inline-flex items-center px-8 py-3 text-lg font-semibold tracking-tighter text-white"
                                         onClick={connectWallet}
                                     >
                                         Connect Wallet
@@ -227,7 +225,7 @@ function Login () {
             {/* Main Layout */}
             <main>
                 <section className="w-full text-black">
-                    <div className="max-w-8xl mx-auto inline-block items-center p-3 pt-0 lg:flex lg:flex-wrap lg:pt-4">
+                    <div className="max-w-8xl mx-auto inline-block items-center p-3 pt-0 lg:flex lg:flex-wrap lg:pt-0">
                         <div className="lg:w-3/6">
                             <h2 className="max-w-xl lg:text-[4.2em] text-3xl font-bold leading-none text-black inline-block">
                                 Selamat Datang di VoteYuk!
@@ -237,11 +235,18 @@ function Login () {
                                 Kami memperkenalkan sistem pemungutan suara yang aman dan transparan dengan memanfaatkan teknologi blockchain
                             </p>
                             <a
-                                className="bg-blue mt-2 inline-flex items-center px-8 py-3 text-lg font-semibold tracking-tighter text-white"
-                                href="/TableVoter"
+                                className="bg-blue hover:bg-blue-600  mt-2 inline-flex items-center pr-12 px-8 py-3 text-lg font-semibold tracking-tighter text-white"
+                                href="/dashboard/vote-area"
                             >
                                 VOTE NOW!
                             </a>
+                            <a
+                                className="bg-blue hover:bg-blue-600 mt-2 inline-flex items-center px-8 py-3 text-lg font-semibold tracking-tighter text-white ml-4"
+                                href="https://cloud.google.com/application/web3/faucet/ethereum/sepolia"
+                            >
+                                Claim Faucet
+                            </a>
+
                         </div>
                         <div className="mb-20 mt-44 hidden w-full flex-col lg:mt-12 lg:inline-block lg:w-3/6">
                             <img src={page} alt="Hero" />
@@ -328,34 +333,35 @@ function Login () {
                         </div>
                     </div>
 
-                    <div className="mx-auto px-5 pt-32 pb-24 lg:px-24">
+                    <div className="mx-auto px-5 pt-20 pb-24 lg:px-24">
+                    <div className="mx-auto px-5 pt-0 pb-24 lg:px-24">
                     <div className="my-3 flex w-full flex-col text-left lg:text-center">
                         <h2 className="bold mb-8 text-4xl font-bold leading-tight text-black lg:text-6xl">
-                        Lorem ipsum elit sit unar,{" "}
+                        Teknologi Blockchain: Merevolusi Kepercayaan Digital
                         <br className="hidden lg:inline-block" />
-                        consectetur adipiscing elit.
+                        dan Desentralisasi
                         </h2>
                     </div>
                     <div className="flex w-full flex-col text-left lg:text-center">
                         <h3 className="text-2xl text-black">
-                        Lorem ipsum arcu, consectetur adipiscing elit. Viverra elementum
-                        pellentesque <br className="hidden lg:inline-block" />
-                        tortor, luctus blandit sed dolor et, semper. Posuere vitae vitae,
-                        ac mus. Arcu quis feugiat.
+                        Blockchain menyediakan cara yang aman dan transparan untuk mencatat dan memverifikasi transaksi 
+                        di seluruh jaringan desentralisasi. Teknologi ini menjadi dasar bagi cryptocurrency dan 
+                        menawarkan solusi inovatif untuk integritas data, kontrak pintar, dan aplikasi terdesentralisasi.
                         </h3>
                     </div>
-                    <div className="flex w-full flex-row justify-center pt-24 text-center">
+                    </div>
+                    <div className="flex w-full flex-row justify-center pt-0 text-center">
                         <a
                         href="/"
                         className="underline-blue px-8 text-xl font-semibold text-black"
                         >
-                        Ut eleifend.
+                        Blockchain
                         </a>
                         <a
                         href="/"
                         className="underline-gray px-6 text-xl font-semibold text-gray-700"
                         >
-                        Tempus in.
+                        Ethereum
                         </a>
                     </div>
                     </div>
@@ -369,26 +375,22 @@ function Login () {
                     </h2>
 
                         <p className="text-gray-600 mb-4 text-center lg:text-left text-lg">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        Soulbound Token (SBT) adalah jenis token kripto yang dirancang untuk tidak dapat dipindahkan atau diperdagangkan setelah diterbitkan. VoteID NFT berfungsi sebagai SBT yang unik untuk setiap pemilih. Token ini berfungsi sebagai identitas digital dan sebagai syarat eligible melakukan voting.
                         </p>
-                        <button
-                            className={`bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 text-lg font-semibold tracking-tighter rounded-full inline-flex items-center justify-center ${!account && 'opacity-50 cursor-not-allowed'} mb-4`}
-                            onClick={mintSoulbound}
-                            disabled={!account || claimedSBT}
-                        >
-                            {claimedSBT ? "Minted" : "MINT SBT"}
-                        </button>
-
-
-                        {showAlert && (
-                        <div className={`p-4 mb-4 rounded-md text-center ${alertMessage.includes('successfully') ? 'bg-green-200 text-green-800' : 'bg-yellow-200 text-yellow-800'}`}>
-                            {alertMessage}
-                        </div>
-                        )}
-                        <p className="text-center text-sm text-gray-500 mb-4 lg:text-left">{status}</p>
+                        <a href="/dashboard/mint-sbt">
+                            <button
+                                className="bg-blue hover:bg-blue-600 text-white px-8 py-3 text-lg font-semibold tracking-tighter inline-flex items-center justify-center mb-4"
+                            >
+                                MINT SBT DISINI
+                            </button>
+                        </a>
                         <div className="mt-2 text-center text-sm text-gray-700 lg:text-left">
-                        <p><span className="font-bold">Contract Address:</span>0x76aeE7c93Ad0D2AADEAf28fA1c6f68A57b7A95B6<a href='https://sepolia.etherscan.io/token/0x76aeE7c93Ad0D2AADEAf28fA1c6f68A57b7A95B6' className="text-blue-500 hover:underline">View on Etherscan</a></p>
+                        <p><span className="font-bold">Supply:</span>50 SBT</p>
                         </div>
+                        <div className="mt-2 text-center text-sm text-gray-700 lg:text-left">
+                        <p><span className="font-bold">Contract Address:</span>0xb2A829b6f467F0DdA930175d43E0b7aE09DC6108<a href='https://sepolia.etherscan.io/token/0xb2A829b6f467F0DdA930175d43E0b7aE09DC6108' className="text-blue-500 hover:underline">View on Etherscan</a></p>
+                        </div>
+
                     </div>
                     </div>
                 </section>
@@ -397,25 +399,25 @@ function Login () {
                 <div className="max-w-8xl mx-auto px-5 py-24 text-black">
                     <div className="order-first flex flex-wrap text-left">
                     <div className="w-full px-4 md:w-2/4 lg:w-1/5">
-                        <h2 className="mb-3 text-lg tracking-widest">E-Voting</h2>
+                        <h2 className="mb-3 text-lg tracking-widest">Development</h2>
                         <nav className="list-none space-y-2 py-3">
                         <li>
-                            <a href="/">Blockchain Overview</a>
+                            <a href="https://docs.ethers.org/v5/">Ethers</a>
                         </li>
                         <li>
-                            <a href="/">Voting Protocols</a>
+                            <a href="https://ethereum.org/en/">Ethereum</a>
                         </li>
                         <li>
-                            <a href="/">Smart Contracts</a>
+                            <a href="https://hardhat.org/tutorial/writing-and-compiling-contracts">Hardhat</a>
                         </li>
                         <li>
-                            <a href="/">Transaction Verification</a>
+                            <a href="https://www.pinata.cloud/">Pinata</a>
                         </li>
                         <li>
-                            <a href="/">Election Integrity</a>
+                            <a href="https://www.infura.io/solutions">Infura</a>
                         </li>
                         <li>
-                            <a href="/">User Authentication</a>
+                            <a href="https://react.dev/learn">React.js</a>
                         </li>
                         </nav>
                     </div>
@@ -452,7 +454,7 @@ function Login () {
                             <a href="/">Developer Guides</a>
                         </li>
                         <li>
-                            <a href="/">API References</a>
+                            <a href="https://www.infura.io/blog/post/sidechains-vs-rollups-breaking-down-the-differences-for-dapp-development">API References</a>
                         </li>
                         <li>
                             <a href="/">Case Studies</a>

@@ -1,6 +1,6 @@
-import { Fragment, useContext, useState } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useParams } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
 import {
   Bars3BottomLeftIcon,
@@ -21,6 +21,7 @@ import VoteArea from "./components/VoteArea";
 import Search from "./components/Search";
 import MintSBT from "./components/MintSBT"
 import { AuthContext } from "./context/AuthContext";
+
 
 // Daftar menu navigasi untuk admin
 const adminNav = [
@@ -56,6 +57,8 @@ const components = {
 };
 
 function Home() {
+  const { id } = useParams();
+
   // Mengambil nilai dari AuthContext
   const { account, connected, connectWallet, disconnectWallet } = useContext(AuthContext);
   // State untuk membuka atau menutup sidebar
@@ -65,6 +68,36 @@ function Home() {
   const Component = components[component];
   // State untuk menyimpan pesan atau status saat ini
   const [msg, setMsg] = useState();
+
+ 
+  useEffect(() => {
+    switch (id) {
+      case "information":
+        setComponent(1);
+        break;
+      case "candidate-details":
+        setComponent(1);
+        break;
+      case "search":
+        setComponent(2);
+        break;
+      case "vote-area":
+        setComponent(3);
+        break;
+      case "result":
+        setComponent(4);
+        break;
+      case "add-candidate":
+        setComponent(5);
+        break;
+      case "voters":
+        setComponent(6);
+        break;
+      case "mint-sbt":
+        setComponent(7);
+        break;
+    }
+  }, []);
 
   // Fungsi untuk menangani klik pada menu dan mengubah komponen yang ditampilkan
   const onClick = (data) => {
