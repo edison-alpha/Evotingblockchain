@@ -29,6 +29,8 @@ const soulboundContractAddress = "0xb2A829b6f467F0DdA930175d43E0b7aE09DC6108"; /
 const soulboundTokenAddress = "0xb2A829b6f467F0DdA930175d43E0b7aE09DC6108";// UBAH DENGAN CONTRACT ADDRESS SOULBOUNDTOKEN
 
 ```
---client---
+ ```ubah dulu
+
 npm i
 npm start
+```
