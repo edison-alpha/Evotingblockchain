@@ -3,6 +3,7 @@
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
 
 Try running some of the following tasks:
+```shell
 bahan :
 install metamask
 buat dompet baru
@@ -10,6 +11,7 @@ import wallet via private key
 private key ( yang ada di .env) tambahkan 0x didepan
 ubah jaringan ke sepolia
 
+```
 
 ```shell
 
