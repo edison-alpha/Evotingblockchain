@@ -1,44 +1,70 @@
-# Sample Hardhat Project
+# Getting Started with Create React App
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Try running some of the following tasks:
-```shell
-bahan :
-install metamask
-buat dompet baru
-import wallet via private key
-private key ( yang ada di .env) tambahkan 0x didepan
-ubah jaringan ke sepolia
+## Available Scripts
 
-```
+In the project directory, you can run:
 
-```shell
+### `npm start`
 
----Vote-app---
-npm i
-npx hardhat run scripts/deploy.js --network sepolia
-copy soulboundtoken contract : 0x....
-copy onlinevoting contract : 0x....
-```
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
- ```ubah dulu
-ubah dulu
-----authcontext--
-const contractAddress = "0x5eF16A341E312457bf703382Bf3D80888C009E77"; // ubah dengan contract address yang dicopy
-const soulboundContractAddress = "0xb2A829b6f467F0DdA930175d43E0b7aE09DC6108"; // ubah dengan contract address yang dicopy
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-----mintSBT---
-const soulboundTokenAddress = "0xb2A829b6f467F0DdA930175d43E0b7aE09DC6108";// UBAH DENGAN CONTRACT ADDRESS SOULBOUNDTOKEN
+### `npm test`
 
-```
- ```ubah dulu
-cd client
-npm i
-npm start
-```
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
- ```ubah dulu
-LOGIN ADMIN DENGAN ADDRESS DARI PRIVATE KEY YANG DI IMPORT
-LOGIN USER DARI ADDRESS METAMASK YANG DIBUAT
-```
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
