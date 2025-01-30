@@ -31,6 +31,9 @@ contract OnlineVoting {
     mapping(uint256 => Candidate) private candidate; // Mapping untuk menyimpan kandidat berdasarkan ID
     uint256 private candidateCount = 0; // Penghitung jumlah kandidat
 
+    // Menambahkan akses hasil pemilih
+    bool public voterResultAccess = false; // Akses hasil pemilih
+
     event votedEvent(uint256 indexed _candidateId); // Event untuk mencatat ketika suara diberikan
     event candidateEvent(string _message); // Event untuk mencatat ketika kandidat ditambahkan
 
@@ -41,6 +44,17 @@ contract OnlineVoting {
     modifier onlyOwner() {
         require(msg.sender == owner, "You are not the owner");
         _;
+    }
+
+    // Modifier untuk memeriksa akses hasil pemilih
+    modifier onlyIfResultAccessible() {
+        require(voterResultAccess, "Voter result access is not allowed");
+        _;
+    }
+
+    // Fungsi untuk mengatur akses hasil pemilih
+    function setVoterResultAccess(bool _access) public onlyOwner {
+        voterResultAccess = _access; // Mengatur akses hasil pemilih
     }
 
     // Fungsi untuk menambahkan kandidat baru ke dalam pemilihan
@@ -88,7 +102,7 @@ contract OnlineVoting {
     }
 
     // Fungsi untuk mengembalikan kandidat pemenang
-    function getWinner() public view returns (Candidate memory) {
+    function getWinner() public view onlyIfResultAccessible returns (Candidate memory) {
         require(isResultDeclared, "Result has not been declared yet"); // Memeriksa apakah hasil telah diumumkan
         return candidate[winnerId]; // Mengembalikan kandidat pemenang
     }

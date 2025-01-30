@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useTable, useSortBy } from "react-table";
 
-const API_KEY = 'GUBF8TN6EB4TVFPCR2DT3HNBX1FVK8C5AC'; // Replace with your Sepolia API Key
+const API_KEY = '8UCXTIMHKGFH9XW1C4B96RTPXWQDUN7865';
 
 function Table({ columns, data }) {
   const {
@@ -19,7 +19,6 @@ function Table({ columns, data }) {
     useSortBy
   );
 
-  // Cap the displayed rows at 20
   const firstPageRows = rows.slice(0, 20);
 
   return (
@@ -67,7 +66,7 @@ function Table({ columns, data }) {
 }
 
 function VoterRegistration() {
-  const [searchType, setSearchType] = useState('txhash'); // New state for search type
+  const [searchType, setSearchType] = useState('txhash');
   const [searchInput, setSearchInput] = useState('');
   const [transactionData, setTransactionData] = useState([]);
   const [error, setError] = useState(null);
@@ -82,8 +81,7 @@ function VoterRegistration() {
       let txData = [];
       
       if (searchType === 'txhash') {
-        // Fetch transaction details by transaction hash
-        const txResponse = await axios.get(`https://api-sepolia.etherscan.io/api`, {
+        const txResponse = await axios.get(`https://api-sepolia.basescan.org/api`, {
           params: {
             module: 'proxy',
             action: 'eth_getTransactionByHash',
@@ -91,10 +89,9 @@ function VoterRegistration() {
             apikey: API_KEY
           }
         });
-
+        
         const result = txResponse.data.result;
         
-        // Check if result exists and has the necessary fields
         if (result) {
           txData = [{
             txhash: result.hash,
@@ -102,13 +99,12 @@ function VoterRegistration() {
             blockNumber: parseInt(result.blockNumber, 16),
             from: result.from,
             to: result.to,
-            value: parseFloat(parseInt(result.value, 16) / 1e18).toFixed(5), // Convert wei to ether
+            value: parseFloat(parseInt(result.value, 16) / 1e18).toFixed(5),
             method: getTransactionMethod(result.input)
           }];
         }
       } else if (searchType === 'address') {
-        // Fetch transaction list by address
-        const txListResponse = await axios.get(`https://api-sepolia.etherscan.io/api`, {
+        const txListResponse = await axios.get(`https://api-sepolia.basescan.org/api`, {
           params: {
             module: 'account',
             action: 'txlist',
@@ -122,7 +118,6 @@ function VoterRegistration() {
 
         const txList = txListResponse.data.result;
         
-        // Map response to transaction data
         if (txList && txList.length > 0) {
           txData = txList.map(tx => ({
             txhash: tx.hash,
@@ -130,7 +125,7 @@ function VoterRegistration() {
             blockNumber: tx.blockNumber,
             from: tx.from,
             to: tx.to,
-            value: parseFloat(parseInt(tx.value, 10) / 1e18).toFixed(5), // Convert wei to ether
+            value: parseFloat(parseInt(tx.value, 10) / 1e18).toFixed(5),
             method: getTransactionMethod(tx.input)
           }));
         }
@@ -149,22 +144,24 @@ function VoterRegistration() {
     }
   };
 
-  // Determine transaction method from input data
   const getTransactionMethod = (input) => {
     if (!input || input === '0x') {
-      return 'Transfer'; // Regular Ether transfer
+      return 'Transfer';
     }
-    // Example decoding: You can extend this with known method signatures
     const methodSignature = input.slice(0, 10);
     switch (methodSignature) {
-      case '0xa9059cbb': // ERC20 Transfer function
+      case '0xa9059cbb':
         return 'ERC20 Transfer';
-      case '0x095ea7b3': // ERC20 Approve function
+      case '0x095ea7b3':
         return 'ERC20 Approve';
-      // Add more cases as needed
       default:
         return 'Contract Call';
     }
+  };
+
+  const formatAddress = (address) => {
+    if (!address) return '';
+    return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
   };
 
   const columns = React.useMemo(
@@ -174,7 +171,7 @@ function VoterRegistration() {
         accessor: 'txhash',
         Cell: ({ value }) => (
           <a 
-            href={`https://sepolia.etherscan.io/tx/${value}`} 
+            href={`https://sepolia.basescan.org/tx/${value}`} 
             target="_blank" 
             rel="noopener noreferrer"
             className="text-blue-600 hover:underline"
@@ -186,8 +183,34 @@ function VoterRegistration() {
       { Header: 'Method', accessor: 'method' },
       { Header: 'Status', accessor: 'status' },
       { Header: 'Block Number', accessor: 'blockNumber' },
-      { Header: 'From', accessor: 'from' },
-      { Header: 'To', accessor: 'to' },
+      { 
+        Header: 'From', 
+        accessor: 'from',
+        Cell: ({ value }) => (
+          <a 
+            href={`https://sepolia.basescan.org/address/${value}`} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
+          >
+            {formatAddress(value)}
+          </a>
+        )
+      },
+      { 
+        Header: 'To', 
+        accessor: 'to',
+        Cell: ({ value }) => (
+          <a 
+            href={`https://sepolia.basescan.org/address/${value}`} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
+          >
+            {formatAddress(value)}
+          </a>
+        )
+      },
       { Header: 'Value (ETH)', accessor: 'value' }
     ],
     []
